@@ -30,3 +30,4 @@ screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/
 sleep 10
 
 .local/bin/lufah -a / enable-all-gpus
+.local/bin/lufah -a / fold

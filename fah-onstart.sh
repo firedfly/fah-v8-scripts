@@ -25,11 +25,8 @@
     /var/tmp/* \
     /var/log/*
 
-screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$ACCOUNT_TOKEN --machine-name="Vast.ai-$VAST_CONTAINERLABEL"
+screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$ACCOUNT_TOKEN --machine-name="Vast.ai-$VAST_CONTAINERLABEL" --cpus 0
 
 sleep 10
 
-.local/bin/lufah -a / config cpus 0
-.local/bin/lufah -a /gpus create-group
-.local/bin/lufah -a /gpus config cpus 0
-.local/bin/lufah -a /gpus enable-all-gpus
+.local/bin/lufah -a / enable-all-gpus

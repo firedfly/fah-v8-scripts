@@ -25,4 +25,4 @@
     /var/tmp/* \
     /var/log/*
 
-screen ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$ACCOUNT_TOKEN --machine-name="Vast.ai-$VAST_CONTAINERLABEL" --cpus=0
+screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$ACCOUNT_TOKEN --machine-name="Vast.ai-$VAST_CONTAINERLABEL"

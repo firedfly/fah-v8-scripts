@@ -26,9 +26,38 @@
     /var/log/*
 
 FAH_MACHINE_NAME="Vast.ai-$VAST_CONTAINERLABEL"
+if [[ -v FAH_USERNAME ]]; then
+    echo "FAH username specified; Adding to machine name"
+    FAH_MACHINE_NAME=$FAH_MACHINE_NAME-$FAH_USERNAME
+fi
+
+echo "Starting fah-clinent"
 screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$FAH_ACCOUNT_TOKEN --machine-name=$FAH_MACHINE_NAME --cpus 0
 
+echo "Waiting 10 seconds for fah-client to start..."
 sleep 10
 
+echo "Enabling all GPUs"
 .local/bin/lufah -a / enable-all-gpus
-#.local/bin/lufah -a / fold
+
+if [[ -v FAH_USERNAME ]]; then
+    echo "FAH username specified.  Updating FAH config"
+    .local/bin/lufah -a / config user $FAH_USERNAME    
+fi
+
+if [[ -v FAH_TEAM ]]; then
+    echo "FAH team specified.  Updating FAH config"
+    .local/bin/lufah -a / config team $FAH_TEAM    
+fi
+
+if [[ -v FAH_PASSKEY ]]; then
+    echo "FAH passkey specified.  Updating FAH config"
+    .local/bin/lufah -a / config passkey $FAH_PASSKEY    
+fi
+
+if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
+    echo "FAH autostart enabled.  Folding is starting."
+    #.local/bin/lufah -a / fold
+elif
+    echo "FAH autostart disabled.  You will need to manually start folding on this machine"
+fi

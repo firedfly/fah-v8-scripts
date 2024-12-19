@@ -58,6 +58,6 @@ fi
 if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
     echo "FAH autostart enabled.  Folding is starting."
     #.local/bin/lufah -a / fold
-elif
+elseif
     echo "FAH autostart disabled.  You will need to manually start folding on this machine"
 fi

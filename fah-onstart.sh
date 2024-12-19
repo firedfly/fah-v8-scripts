@@ -47,7 +47,7 @@ fi
 
 if [[ -v FAH_TEAM ]]; then
     echo "FAH team specified.  Updating FAH config"
-    .local/bin/lufah -a / config team $FAH_TEAM    
+    .local/bin/lufah -a / config team $FAH_TEAM
 fi
 
 if [[ -v FAH_PASSKEY ]]; then
@@ -57,7 +57,7 @@ fi
 
 if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
     echo "FAH autostart enabled.  Folding is starting."
-    #.local/bin/lufah -a / fold
-elseif
+    .local/bin/lufah -a / fold
+else
     echo "FAH autostart disabled.  You will need to manually start folding on this machine"
 fi

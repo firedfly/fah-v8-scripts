@@ -25,7 +25,7 @@
     /var/tmp/* \
     /var/log/*
 
-set $FAH_MACHINE_NAME="Vast.ai-$VAST_CONTAINERLABEL"
+FAH_MACHINE_NAME="Vast.ai-$VAST_CONTAINERLABEL"
 screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$FAH_ACCOUNT_TOKEN --machine-name=$FAH_MACHINE_NAME --cpus 0
 
 sleep 10

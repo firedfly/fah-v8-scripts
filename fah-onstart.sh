@@ -27,7 +27,7 @@
 
 FAH_MACHINE_NAME="Vast.ai-$VAST_CONTAINERLABEL"
 if [[ -v FAH_USERNAME ]]; then
-    echo "FAH username specified; Adding to machine name"
+    echo "FAH username specified; Updating machine name"
     FAH_MACHINE_NAME=$FAH_MACHINE_NAME-$FAH_USERNAME
 fi
 
@@ -40,29 +40,76 @@ sleep 10
 echo "Enabling all GPUs"
 .local/bin/lufah -a / enable-all-gpus
 
-if [[ -v FAH_USERNAME ]]; then
-    echo "FAH username specified.  Updating FAH config"
-    .local/bin/lufah -a / config user $FAH_USERNAME
-    .local/bin/lufah -a / config user
-fi
+echo "===================================="
+echo "Beginning FAH configuration loop"
+while :
+do
+    if [[ -v FAH_USERNAME ]]; then
+        FAH_CURRENT_USERNAME=$(.local/bin/lufah -a / config user)
+        if [[ $FAH_CURRENT_USERNAME != "\$FAH_USERNAME\"" ]]
+        then
+            echo "FAH username specified.  Updating FAH config"
+            .local/bin/lufah -a / config user $FAH_USERNAME
+            echo "---"
+        fi
+    fi
 
-if [[ -v FAH_TEAM ]]; then
-    echo "FAH team specified.  Updating FAH config"
-    .local/bin/lufah -a / config team $FAH_TEAM
-    .local/bin/lufah -a / config team
-fi
+    if [[ -v FAH_TEAM ]]; then
+        FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
+        if [[ $FAH_CURRENT_TEAM != "\$FAH_TEAM\"" ]]
+        then
+            echo "FAH team specified.  Updating FAH config"
+            .local/bin/lufah -a / config team $FAH_TEAM
+            echo "---"
+        fi
+    fi
 
-if [[ -v FAH_PASSKEY ]]; then
-    echo "FAH passkey specified.  Updating FAH config"
-    .local/bin/lufah -a / config passkey $FAH_PASSKEY
-    .local/bin/lufah -a / config passkey    
-fi
+    if [[ -v FAH_PASSKEY ]]; then
+        FAH_CURRENT_PASSKEY=$(.local/bin/lufah -a / config passkey)
+        if [[ $FAH_CURRENT_PASSKEY != "\$FAH_PASSKEY\"" ]]
+        then
+            echo "FAH passkey specified.  Updating FAH config"
+            .local/bin/lufah -a / config passkey $FAH_PASSKEY
+            echo "---"
+        fi
+    fi
 
 
+    if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
+        echo "FAH autostart enabled."
 
-if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
-    echo "FAH autostart enabled.  Folding is starting."
-    .local/bin/lufah -a / fold
-else
-    echo "FAH autostart disabled.  You will need to manually start folding on this machine"
-fi
+        FAH_CURRENT_USERNAME=$(.local/bin/lufah -a / config user)
+        if [[ -v FAH_USERNAME && $FAH_CURRENT_USERNAME != "\$FAH_USERNAME\"" ]]
+        then
+            echo "Configured user does not match the specified user.  Will retry configuration"
+            sleep 1
+            continue;
+        fi
+        
+        FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
+        if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "\$FAH_TEAM\"" ]]
+        then
+            echo "Configured team does not match the specified team.  Will retry configuration"
+            sleep 1
+            continue;
+        fi
+        
+        FAH_CURRENT_PASSKEY=$(.local/bin/lufah -a / config passkey)
+        if [[ -v FAH_PASSKEY && $FAH_CURRENT_PASSKEY != "\$FAH_PASSKEY\"" ]]
+        then
+            echo "Configured passkey does not match the specified passkey.  Will retry configuration"
+            sleep 1
+            continue;
+        fi
+
+        echo "Configuration finished.  Folding starting"
+        #.local/bin/lufah -a / fold
+
+        # we only want to start folding once.  after one time, we enter the loop to ensure
+        # the configuration is still accurate (not overridden by account settings)
+        FAH_AUTOSTART=false
+    fi
+
+    # Sleep 5 seconds and then double check the config is accuate still
+    sleep 5
+done

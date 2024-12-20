@@ -37,27 +37,31 @@ screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/
 echo "Waiting 10 seconds for fah-client to start..."
 sleep 10
 
+echo "Creating new FAH Group"
+.local/bin/lufah -a /gpus create-group
+.local/bin/lufah -a /gpus config cpus 0
+
 echo "Enabling all GPUs"
-.local/bin/lufah -a / enable-all-gpus
+.local/bin/lufah -a /gpus enable-all-gpus
 
 if [[ -v FAH_USERNAME ]]; then
     echo "FAH username specified.  Updating FAH config"
-    .local/bin/lufah -a / config user $FAH_USERNAME    
+    .local/bin/lufah -a /gpus config user $FAH_USERNAME    
 fi
 
 if [[ -v FAH_TEAM ]]; then
     echo "FAH team specified.  Updating FAH config"
-    .local/bin/lufah -a / config team $FAH_TEAM
+    .local/bin/lufah -a /gpus config team $FAH_TEAM
 fi
 
 if [[ -v FAH_PASSKEY ]]; then
     echo "FAH passkey specified.  Updating FAH config"
-    .local/bin/lufah -a / config passkey $FAH_PASSKEY    
+    .local/bin/lufah -a /gpus config passkey $FAH_PASSKEY    
 fi
 
 if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
     echo "FAH autostart enabled.  Folding is starting."
-    .local/bin/lufah -a / fold
+    .local/bin/lufah -a /gpus fold
 else
     echo "FAH autostart disabled.  You will need to manually start folding on this machine"
 fi

@@ -113,3 +113,5 @@ do
     # Sleep 5 seconds and then double check the config is accuate still
     sleep 5
 done
+
+env >> /etc/environment;

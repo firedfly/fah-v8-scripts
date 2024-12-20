@@ -56,7 +56,7 @@ do
 
     if [[ -v FAH_TEAM ]]; then
         FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
-        if [[ $FAH_CURRENT_TEAM != "\"$FAH_TEAM\"" ]]
+        if [[ $FAH_CURRENT_TEAM != "$FAH_TEAM" ]]
         then
             echo "FAH team specified.  Updating FAH config"
             .local/bin/lufah -a / config team $FAH_TEAM
@@ -87,7 +87,7 @@ do
         fi
         
         FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
-        if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "\"$FAH_TEAM\"" ]]
+        if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "$FAH_TEAM" ]]
         then
             echo "Configured team ($FAH_CURRENT_TEAM) does not match the specified team.  Will retry configuration"
             sleep 1

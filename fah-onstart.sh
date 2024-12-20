@@ -81,7 +81,7 @@ do
         FAH_CURRENT_USERNAME=$(.local/bin/lufah -a / config user)
         if [[ -v FAH_USERNAME && $FAH_CURRENT_USERNAME != "\"$FAH_USERNAME\"" ]]
         then
-            echo "Configured user does not match the specified user.  Will retry configuration"
+            echo "Configured user ($FAH_CURRENT_USERNAME) does not match the specified user.  Will retry configuration"
             sleep 1
             continue;
         fi
@@ -89,7 +89,7 @@ do
         FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
         if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "\"$FAH_TEAM\"" ]]
         then
-            echo "Configured team does not match the specified team.  Will retry configuration"
+            echo "Configured team ($FAH_CURRENT_TEAM) does not match the specified team.  Will retry configuration"
             sleep 1
             continue;
         fi
@@ -97,7 +97,7 @@ do
         FAH_CURRENT_PASSKEY=$(.local/bin/lufah -a / config passkey)
         if [[ -v FAH_PASSKEY && $FAH_CURRENT_PASSKEY != "\"$FAH_PASSKEY\"" ]]
         then
-            echo "Configured passkey does not match the specified passkey.  Will retry configuration"
+            echo "Configured passkey ($FAH_CURRENT_PASSKEY) does not match the specified passkey.  Will retry configuration"
             sleep 1
             continue;
         fi

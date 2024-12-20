@@ -42,18 +42,23 @@ echo "Enabling all GPUs"
 
 if [[ -v FAH_USERNAME ]]; then
     echo "FAH username specified.  Updating FAH config"
-    .local/bin/lufah -a / config user $FAH_USERNAME    
+    .local/bin/lufah -a / config user $FAH_USERNAME
+    .local/bin/lufah -a / config user
 fi
 
 if [[ -v FAH_TEAM ]]; then
     echo "FAH team specified.  Updating FAH config"
     .local/bin/lufah -a / config team $FAH_TEAM
+    .local/bin/lufah -a / config team
 fi
 
 if [[ -v FAH_PASSKEY ]]; then
     echo "FAH passkey specified.  Updating FAH config"
-    .local/bin/lufah -a / config passkey $FAH_PASSKEY    
+    .local/bin/lufah -a / config passkey $FAH_PASSKEY
+    .local/bin/lufah -a / config passkey    
 fi
+
+
 
 if [[ -v FAH_AUTOSTART && $FAH_AUTOSTART = "true" ]]; then
     echo "FAH autostart enabled.  Folding is starting."

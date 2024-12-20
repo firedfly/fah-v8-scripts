@@ -46,7 +46,7 @@ while :
 do
     if [[ -v FAH_USERNAME ]]; then
         FAH_CURRENT_USERNAME=$(.local/bin/lufah -a / config user)
-        if [[ $FAH_CURRENT_USERNAME != "\$FAH_USERNAME\"" ]]
+        if [[ $FAH_CURRENT_USERNAME != "\"$FAH_USERNAME\"" ]]
         then
             echo "FAH username specified.  Updating FAH config"
             .local/bin/lufah -a / config user $FAH_USERNAME
@@ -56,7 +56,7 @@ do
 
     if [[ -v FAH_TEAM ]]; then
         FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
-        if [[ $FAH_CURRENT_TEAM != "\$FAH_TEAM\"" ]]
+        if [[ $FAH_CURRENT_TEAM != "\"$FAH_TEAM\"" ]]
         then
             echo "FAH team specified.  Updating FAH config"
             .local/bin/lufah -a / config team $FAH_TEAM
@@ -66,7 +66,7 @@ do
 
     if [[ -v FAH_PASSKEY ]]; then
         FAH_CURRENT_PASSKEY=$(.local/bin/lufah -a / config passkey)
-        if [[ $FAH_CURRENT_PASSKEY != "\$FAH_PASSKEY\"" ]]
+        if [[ $FAH_CURRENT_PASSKEY != "\"$FAH_PASSKEY\"" ]]
         then
             echo "FAH passkey specified.  Updating FAH config"
             .local/bin/lufah -a / config passkey $FAH_PASSKEY
@@ -79,7 +79,7 @@ do
         echo "FAH autostart enabled."
 
         FAH_CURRENT_USERNAME=$(.local/bin/lufah -a / config user)
-        if [[ -v FAH_USERNAME && $FAH_CURRENT_USERNAME != "\$FAH_USERNAME\"" ]]
+        if [[ -v FAH_USERNAME && $FAH_CURRENT_USERNAME != "\"$FAH_USERNAME\"" ]]
         then
             echo "Configured user does not match the specified user.  Will retry configuration"
             sleep 1
@@ -87,7 +87,7 @@ do
         fi
         
         FAH_CURRENT_TEAM=$(.local/bin/lufah -a / config team)
-        if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "\$FAH_TEAM\"" ]]
+        if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "\"$FAH_TEAM\"" ]]
         then
             echo "Configured team does not match the specified team.  Will retry configuration"
             sleep 1
@@ -95,7 +95,7 @@ do
         fi
         
         FAH_CURRENT_PASSKEY=$(.local/bin/lufah -a / config passkey)
-        if [[ -v FAH_PASSKEY && $FAH_CURRENT_PASSKEY != "\$FAH_PASSKEY\"" ]]
+        if [[ -v FAH_PASSKEY && $FAH_CURRENT_PASSKEY != "\"$FAH_PASSKEY\"" ]]
         then
             echo "Configured passkey does not match the specified passkey.  Will retry configuration"
             sleep 1

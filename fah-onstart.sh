@@ -31,6 +31,9 @@ if [[ -v FAH_USERNAME ]]; then
     FAH_MACHINE_NAME=$FAH_MACHINE_NAME-$FAH_USERNAME
 fi
 
+# make the current environment variables available to a standard shell 
+env >> /etc/environment;
+
 echo "Starting fah-clinent"
 screen -dm ./fah-client --log=/var/log/fah-client/log.txt --log-rotate-dir=/var/log/fah-client/ --account-token=$FAH_ACCOUNT_TOKEN --machine-name=$FAH_MACHINE_NAME --cpus 0
 
@@ -82,6 +85,8 @@ do
         if [[ -v FAH_USERNAME && $FAH_CURRENT_USERNAME != "\"$FAH_USERNAME\"" ]]
         then
             echo "Configured user ($FAH_CURRENT_USERNAME) does not match the specified user.  Will retry configuration"
+            echo "---"
+            echo "---"
             sleep 1
             continue;
         fi
@@ -90,6 +95,8 @@ do
         if [[ -v FAH_TEAM && $FAH_CURRENT_TEAM != "$FAH_TEAM" ]]
         then
             echo "Configured team ($FAH_CURRENT_TEAM) does not match the specified team.  Will retry configuration"
+            echo "---"
+            echo "---"
             sleep 1
             continue;
         fi
@@ -98,12 +105,14 @@ do
         if [[ -v FAH_PASSKEY && $FAH_CURRENT_PASSKEY != "\"$FAH_PASSKEY\"" ]]
         then
             echo "Configured passkey ($FAH_CURRENT_PASSKEY) does not match the specified passkey.  Will retry configuration"
+            echo "---"
+            echo "---"
             sleep 1
             continue;
         fi
 
         echo "Configuration finished.  Folding starting"
-        #.local/bin/lufah -a / fold
+        .local/bin/lufah -a / fold
 
         # we only want to start folding once.  after one time, we enter the loop to ensure
         # the configuration is still accurate (not overridden by account settings)
@@ -113,5 +122,3 @@ do
     # Sleep 5 seconds and then double check the config is accuate still
     sleep 5
 done
-
-env >> /etc/environment;

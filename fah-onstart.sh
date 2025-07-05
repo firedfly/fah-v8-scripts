@@ -10,7 +10,6 @@
     pipx && \
   pipx install lufah && \
    mkdir /var/log/fah-client && \
-  ln -s libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so && \
   echo "**** install foldingathome ****" && \
   download_url="https://download.foldingathome.org/releases/public/fah-client/debian-10-64bit/release/fah-client_8.3.18-64bit-release.tar.bz2" && \
   curl -o \

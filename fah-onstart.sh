@@ -1,5 +1,8 @@
 # onstart script for Folding@Home v8 running on vast.ai
 
+  echo '**** ensuring we are in the /root  directory ****'
+  cd /root
+
   echo "**** install runtime packages ****" && \
   apt-get update && \
   apt-get install -y \
